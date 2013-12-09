@@ -1,5 +1,5 @@
 {
-    "version": "1.1",
+    "version": "1.2",
     "name": "FFOSAPIs",
     "launch_path": "/index.html",
     "description": "Exploring the APIs provided by Firefox OS",
@@ -10,6 +10,13 @@
         "64": "/firefox-os-apis/images/logo64.png",
         "128": "/firefox-os-apis/images/logo128.png"
     },
+    "permissions": {
+      "contacts":{ 
+        "description": "Jays contacts permission",
+        "access": "readcreate"
+      }
+    },
+    "type": "privileged",
     "developer": {
         "name": "Jaydeep W",
         "url": "http://twitter.com/jaydeep_w"

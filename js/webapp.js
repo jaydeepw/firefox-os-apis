@@ -129,7 +129,8 @@
             });*/
 
             console.log("Add contact has been pressed");
-            alert("gello");
+            // alert("gello");
+            writeAContact();
         }
     }
 
@@ -308,4 +309,48 @@
             };
         }
     }
-})(); 
+})();
+
+
+function writeAContact() {
+
+    console.log("writeAContact has been called");
+
+    // first way: setting the properties directly
+/*    var contactData = new mozContact();
+    contactData.givenName  = ["John"];
+    contactData.familyName = ["Doe"];
+    contactData.nickname   = ["No kidding"];*/
+
+    // second way: using a value object
+    var contactData = {
+      givenName: ["John"],
+      familyName: ["Doe"],
+      nickname: ["No kidding"]
+    };
+
+    var person = new mozContact(contactData); // Firefox OS 1.3 takes a parameter to initialize the object
+
+    console.log("writeAContact person: " + contactData.givenName );
+
+    if ("init" in person) {
+      // Firefox OS 1.2 and below uses a "init" method to initialize the object
+      console.warn("writeAContact exec. init function ");
+      person.init(contactData);
+    } else
+        console.warn("writeAContact init function not found in type mozContact ");
+
+    // save the new contact
+    var saving = navigator.mozContacts.save(person);
+
+    saving.onsuccess = function() {
+      console.log('new contact saved');
+      // This update the person as it is stored
+      // It includes its internal unique ID
+      // Note that saving.result is null here
+    };
+
+    saving.onerror = function(err) {
+      console.error(err);
+    };
+}
