@@ -1,46 +1,4 @@
 (function () {
-    /*
-        WebActivities:
-
-            configure
-            costcontrol/balance
-            costcontrol/data_usage
-            costcontrol/telephony
-            dial
-            new (type: "websms/sms", "webcontacts/contact") (add-contact, compose-mail?)
-            open
-            pick (type: "image/png" etc)
-            record (capture?)
-            save-bookmark
-            share
-            test
-            view (type: "url" etc. "text/html"?)
-    */
-
-    // WebActivities
-    var pickImage = document.querySelector("#pick-image");
-    if (pickImage) { 
-        pickImage.onclick = function () {
-             var pick = new MozActivity({
-                 name: "pick",
-                 data: {
-                     type: ["image/png", "image/jpg", "image/jpeg"]
-                  }
-             });
-
-            pick.onsuccess = function () { 
-                var img = document.createElement("img");
-                img.src = window.URL.createObjectURL(this.result.blob);
-                var imagePresenter = document.querySelector("#image-presenter");
-                imagePresenter.appendChild(img);
-                imagePresenter.style.display = "block";
-            };
-
-            pick.onerror = function () { 
-                alert("Can't view the image!");
-            };
-        }
-    }
 
     var pickAnything = document.querySelector("#pick-anything");
     if (pickAnything) { 
@@ -131,6 +89,14 @@
             console.log("Add contact has been pressed");
             // alert("gello");
             writeAContact();
+        }
+    }
+
+    var deleteAllBtn = document.querySelector("#del-all");
+    if (deleteAllBtn) { 
+        deleteAllBtn.onclick = function () {
+            console.log("Delete all contacts has been pressed");
+            deleteAll();
         }
     }
 
@@ -353,4 +319,56 @@ function writeAContact() {
     saving.onerror = function(err) {
       console.error(err);
     };
+}
+
+function deleteAll() {
+    /*var filter = {
+      sortBy: familyName,
+      sortOrder: ascending,
+      filterBy: ['familyName'],
+      filterValue: 'd',
+      filterOp: startsWith
+    }
+
+    var request = window.navigator.mozContacts.getAll(filter);
+    var count = 0;
+
+    request.onsuccess = function () {
+      if(this.result) {
+        count++;
+
+        // Display the name of the contact
+        console.log(this.result.firstName + ' ' + this.result.familyName);
+
+        // Move to the next contact which will call the request.onsuccess with a new result
+        this.continue();
+
+      } else {
+        console.log(count + 'contacts found.');
+      }
+    }
+
+    request.onerror = function () {
+      console.log('Something goes wrong!');
+    }*/
+
+    /*var request = window.navigator.mozContacts.clear();
+
+    request.onsuccess = function () {
+      console.log('All contacts have been removed.');
+    }
+
+    request.onerror = function () {
+      console.log('No contacts were removed.');
+    }*/
+
+    var request = window.navigator.mozContacts.getCount();
+
+    request.onsuccess = function () {
+      console.log('there are ' + this.result + ' contacts in the database.');
+    }
+
+    request.onerror = function () {
+      console.log('Something goes wrong!');
+    }
 }
