@@ -3,73 +3,73 @@
     var pickAnything = document.querySelector("#pick-anything");
     if (pickAnything) { 
         pickAnything.onclick = function () {
-             var pickAny = new MozActivity({
-                 name: "pick"
-             });
+         var pickAny = new MozActivity({
+             name: "pick"
+         });
 
-            pickAny.onsuccess = function () { 
-                var img = document.createElement("img");
-                if (this.result.blob.type.indexOf("image") != -1) {
-                    img.src = window.URL.createObjectURL(this.result.blob);
-                    document.querySelector("#image-presenter").appendChild(img);
-                }
-            };
+         pickAny.onsuccess = function () { 
+            var img = document.createElement("img");
+            if (this.result.blob.type.indexOf("image") != -1) {
+                img.src = window.URL.createObjectURL(this.result.blob);
+                document.querySelector("#image-presenter").appendChild(img);
+            }
+        };
 
-            pickAny.onerror = function () { 
-                console.log("An error occurred");
-            };
-        }
+        pickAny.onerror = function () { 
+            console.log("An error occurred");
+        };
     }
+}
 
-    var record = document.querySelector("#record");
-    if (record) { 
-        record.onclick = function () {
-            var rec = new MozActivity({
+var record = document.querySelector("#record");
+if (record) { 
+    record.onclick = function () {
+        var rec = new MozActivity({
                 name: "record" // Possibly capture in future versions
             });
 
-            rec.onsuccess = function () { 
-                var img = document.createElement("img");
-                img.src = window.URL.createObjectURL(this.result.blob);
-                var imagePresenter = document.querySelector("#image-presenter");
-                imagePresenter.appendChild(img);
-                imagePresenter.style.display = "block";
-            };
+        rec.onsuccess = function () { 
+            var img = document.createElement("img");
+            img.src = window.URL.createObjectURL(this.result.blob);
+            var imagePresenter = document.querySelector("#image-presenter");
+            imagePresenter.appendChild(img);
+            imagePresenter.style.display = "block";
+        };
 
-            rec.onerror = function () { 
-                alert("No taken picture returned");
-            };
-        }
+        rec.onerror = function () { 
+            alert("No taken picture returned");
+        };
     }
+}
 
-    var dial = document.querySelector("#dial");
-    if (dial) {
-        dial.onclick = function () {
-            var call = new MozActivity({
-                name: "dial",
-                data: {
-                    number: "+46777888999"
-                }
-            });
-        }
+var dial = document.querySelector("#dial");
+if (dial) {
+    dial.onclick = function () {
+        var call = new MozActivity({
+            name: "dial",
+            data: {
+                number: "+46777888999"
+            }
+        });
     }
+}
 
-    var sendSMS = document.querySelector("#send-sms");
-    if (sendSMS) { 
-        sendSMS.onclick = function () {
-            var sms = new MozActivity({
+var sendSMS = document.querySelector("#send-sms");
+if (sendSMS) { 
+    sendSMS.onclick = function () {
+        var sms = new MozActivity({
                 name: "new", // Possible compose-sms in future versions
                 data: {
                     type: "websms/sms",
                     number: "+46777888999"
                 }
             });
-        }
     }
+}
 
-    var addContact = document.querySelector("#add-contact");
-    if (addContact) { 
-        addContact.onclick = function () {
+var addContact = document.querySelector("#add-contact");
+if (addContact) { 
+    addContact.onclick = function () {
             /*var newContact = new MozActivity({
                 name: "new", // Possibly add-contact in future versions
                 data: {
@@ -86,7 +86,7 @@
                 }
             });*/
 
-            console.log("Add contact has been pressed");
+console.log("Add contact has been pressed");
             // alert("gello");
             writeAContact();
         }
@@ -97,6 +97,14 @@
         deleteAllBtn.onclick = function () {
             console.log("Delete all contacts has been pressed");
             deleteAll();
+        }
+    }
+
+    var listAllBtn = document.querySelector("#list-all");
+    if (listAllBtn) { 
+        listAllBtn.onclick = function () {
+            console.log("List all contacts has been pressed");
+            listAll();
         }
     }
 
@@ -115,7 +123,7 @@
     }
 
     var shareImage = document.querySelector("#share-image"),
-        imgToShare = document.querySelector("#image-to-share");
+    imgToShare = document.querySelector("#image-to-share");
     if (shareImage && imgToShare) {
         shareImage.onclick = function () {
             var blob = new Blob([imgToShare], {type: "text/png"});
@@ -178,7 +186,7 @@
              notification.createNotification(
                 "See this", 
                 "This is a notification"
-            );
+                );
         };
     }
 
@@ -194,13 +202,13 @@
                     "landscape-secondary"
                     "portrait-primary"
                     "portrait-secondary" 
-            */
-            var portraitLock = screen.mozLockOrientation("portrait");
-            if (portraitLock) {
-                alert("Orientation locked to portrait");
+                    */
+                    var portraitLock = screen.mozLockOrientation("portrait");
+                    if (portraitLock) {
+                        alert("Orientation locked to portrait");
+                    }
+                };
             }
-        };
-    }
 
     // Vibration
     var vibrate = document.querySelector("#vibrate");
@@ -213,21 +221,21 @@
                      navigator.vibrate([200, 100, 200, 100]);
                     Turn off vibration
                      navigator.vibrate(0);
-            */
-        };
-    }
+                    */
+                };
+            }
 
     // Alarm API
     var addAlarm = document.querySelector("#add-alarm");
     if (addAlarm) {
         addAlarm.onclick = function () {
             var alarmId1,
-                request = navigator.mozAlarms.add(
-                    new Date("May 15, 2012 16:20:00"), 
-                    "honorTimezone", 
-                    {
-                        mydata: "my event"
-                    }
+            request = navigator.mozAlarms.add(
+                new Date("May 15, 2012 16:20:00"), 
+                "honorTimezone", 
+                {
+                    mydata: "my event"
+                }
                 );
              request.onsuccess = function (event) {
                 alarmId1 = event.target.result;
@@ -240,13 +248,13 @@
 
         // Check connection
         var checkConnection = document.querySelector("#check-connection"),
-            connectionDisplay = document.querySelector("#connection-display");
+        connectionDisplay = document.querySelector("#connection-display");
 
         if (checkConnection && connectionDisplay) {
             checkConnection.onclick = function () {
                 var connection = window.navigator.mozConnection,
-                    online = "<strong>Connected:</strong> " + (connection.bandwidth),
-                    metered = "<strong>Metered:</strong> " + connection.metered; 
+                online = "<strong>Connected:</strong> " + (connection.bandwidth),
+                metered = "<strong>Metered:</strong> " + connection.metered; 
 
                 connectionDisplay.innerHTML = online + "<br>" + metered;
                 connectionDisplay.style.display = "block";
@@ -255,15 +263,15 @@
 
         // Check battery
         var checkBattery = document.querySelector("#check-battery"),
-            batteryDisplay = document.querySelector("#battery-display");
+        batteryDisplay = document.querySelector("#battery-display");
         if (checkBattery && batteryDisplay) {
             checkBattery.onclick = function () {
                 var battery = navigator.battery,
-                    batteryLevel = Math.round(battery.level * 100) + "%",
-                    charging = battery.charging,
-                    chargingTime = parseInt(battery.chargingTime / 60, 10),
-                    dischargingTime = parseInt(battery.dischargingTime / 60, 10),
-                    batteryInfo;
+                batteryLevel = Math.round(battery.level * 100) + "%",
+                charging = battery.charging,
+                chargingTime = parseInt(battery.chargingTime / 60, 10),
+                dischargingTime = parseInt(battery.dischargingTime / 60, 10),
+                batteryInfo;
 
                 batteryInfo = "<strong>Battery level:</strong> " + batteryLevel + "<br>";
                 batteryInfo += "<strong>Battery charging:</strong> " + charging + "<br>";
@@ -290,10 +298,10 @@ function writeAContact() {
 
     // second way: using a value object
     var contactData = {
-      givenName: ["John"],
-      familyName: ["Doe"],
-      nickname: ["No kidding"]
-    };
+      givenName: ["Madhuri"],
+      familyName: ["Dixit"],
+      nickname: ["Madhu"]
+  };
 
     var person = new mozContact(contactData); // Firefox OS 1.3 takes a parameter to initialize the object
 
@@ -303,8 +311,8 @@ function writeAContact() {
       // Firefox OS 1.2 and below uses a "init" method to initialize the object
       console.warn("writeAContact exec. init function ");
       person.init(contactData);
-    } else
-        console.warn("writeAContact init function not found in type mozContact ");
+  } else
+  console.warn( "writeAContact init function not found in type mozContact." );
 
     // save the new contact
     var saving = navigator.mozContacts.save(person);
@@ -314,61 +322,78 @@ function writeAContact() {
       // This update the person as it is stored
       // It includes its internal unique ID
       // Note that saving.result is null here
-    };
+  };
 
-    saving.onerror = function(err) {
+  saving.onerror = function(err) {
       console.error(err);
-    };
+  };
 }
 
 function deleteAll() {
-    /*var filter = {
+   /* var filter = {
       sortBy: familyName,
       sortOrder: ascending,
       filterBy: ['familyName'],
       filterValue: 'd',
       filterOp: startsWith
-    }
+  }*/
 
-    var request = window.navigator.mozContacts.getAll(filter);
-    var count = 0;
+  var request = navigator.mozContacts.getAll( {sortBy: "familyName", sortOrder: "descending"} );
+  var count = 0;
+  var name = null;
 
-    request.onsuccess = function () {
-      if(this.result) {
+  request.onsuccess = function () {
+    if( this.result ) {
         count++;
 
-        // Display the name of the contact
-        console.log(this.result.firstName + ' ' + this.result.familyName);
+        name = this.result.givenName + ' ' + this.result.familyName;
 
-        // Move to the next contact which will call the request.onsuccess with a new result
+        // not working at the moment
+        var instanceOfDomRequest = navigator.mozContacts.remove( this.result );
+
+        instanceOfDomRequest.onsuccess = function () {
+            console.log( 'removal success' );
+        }
+
+        instanceOfDomRequest.onerror = function () {
+            console.log( 'removal error' );
+        }
+
+        // Display the name of the contact
+        console.log( name );
+
+        // Move to the next contact which will
+        // call the request.onsuccess with a new result
         this.continue();
 
-      } else {
-        console.log(count + 'contacts found.');
-      }
+    } else {
+        console.log(count + ' contacts found.');
     }
+}
 
     request.onerror = function () {
       console.log('Something goes wrong!');
-    }*/
+    }
+}
 
-    /*var request = window.navigator.mozContacts.clear();
+/****
+Lists the contacts in the console
+**/
+function listAll() {
+    var allContacts = navigator.mozContacts.getAll({sortBy: "familyName", sortOrder: "descending"});
 
-    request.onsuccess = function () {
-      console.log('All contacts have been removed.');
+    allContacts.onsuccess = function(event) {
+      var cursor = event.target;
+        if( cursor.result ) {
+            var contact = cursor.result;
+            console.log("Found: " + contact.givenName[0] + " " + contact.familyName[0]);
+            cursor.continue();
+        } else {
+            console.log( "No more contacts" );
+        }
     }
 
-    request.onerror = function () {
-      console.log('No contacts were removed.');
-    }*/
-
-    var request = window.navigator.mozContacts.getCount();
-
-    request.onsuccess = function () {
-      console.log('there are ' + this.result + ' contacts in the database.');
-    }
-
-    request.onerror = function () {
-      console.log('Something goes wrong!');
+    allContacts.onerror = function() {
+      console.warn("Something went terribly wrong! :(");
     }
 }
